@@ -1,0 +1,115 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept-Language: [en;q=0.8]
+      Cookie: [PREF=hl=en;]
+      user-agent: [Mopidy-YouTube/3.0a1 Mopidy/3.0.1 CPython/3.7.5]
+    method: GET
+    uri: https://www.youtube.com/watch?app=desktop&persist_app=1&v=e1YqueG2gtQ
+  response:
+    body: {string: "<HTML><HEAD><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"\
+        >\n<TITLE>302 Moved</TITLE></HEAD><BODY>\n<H1>302 Moved</H1>\nThe document\
+        \ has moved\n<A HREF=\"https://www.google.com/sorry/index?continue=https://www.youtube.com/watch%3Fv%3De1YqueG2gtQ%26app%3Ddesktop%26persist_app%3D1&amp;q=EgQjxTZ-GKz6g_IFIhkA8aeDS1GCivjbSEmYx2CPbWkWlzylfH4BMgFy\"\
+        >here</A>.\r\n</BODY></HTML>\r\n"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Content-Length: ['385']
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Mon, 10 Feb 2020 06:50:20 GMT']
+      Expires: ['Fri, 01 Jan 1990 00:00:00 GMT']
+      Location: ['https://www.google.com/sorry/index?continue=https://www.youtube.com/watch%3Fv%3De1YqueG2gtQ%26app%3Ddesktop%26persist_app%3D1&q=EgQjxTZ-GKz6g_IFIhkA8aeDS1GCivjbSEmYx2CPbWkWlzylfH4BMgFy']
+      Pragma: [no-cache]
+      Server: [HTTP server (unknown)]
+      X-XSS-Protection: ['0']
+    status: {code: 302, message: Found}
+- request:
+    body: null
+    headers:
+      Accept-Language: [en;q=0.8]
+      user-agent: [Mopidy-YouTube/3.0a1 Mopidy/3.0.1 CPython/3.7.5]
+    method: GET
+    uri: https://www.google.com/sorry/index?continue=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3De1YqueG2gtQ%26app%3Ddesktop%26persist_app%3D1&q=EgQjxTZ-GKz6g_IFIhkA8aeDS1GCivjbSEmYx2CPbWkWlzylfH4BMgFy
+  response:
+    body: {string: '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+        <html>
+
+        <head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta
+        name="viewport" content="initial-scale=1"><title>https://www.youtube.com/watch?v=e1YqueG2gtQ&amp;app=desktop&amp;persist_app=1</title></head>
+
+        <body style="font-family: arial, sans-serif; background-color: #fff; color:
+        #000; padding:20px; font-size:18px;" onload="e=document.getElementById(''captcha'');if(e){e.focus();}">
+
+        <div style="max-width:400px;">
+
+        <hr noshade size="1" style="color:#ccc; background-color:#ccc;"><br>
+
+        <form id="captcha-form" action="index" method="post">
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+        <script>var submitCallback = function(response) {document.getElementById(''captcha-form'').submit();};</script>
+
+        <div id="recaptcha" class="g-recaptcha" data-sitekey="6LfwuyUTAAAAAOAmoS0fdqijC2PbbdH4kjq62Y1b"
+        data-callback="submitCallback" data-s="N2vG2T48yYdtaRpI09boB0yN4wAxHntfr9VxyByf1sk1Y2cYkXp1BfafG1O_QA9RVZSux_dnjSZC9Em4b997t5VtLAd-9102XZhigqrQo5wPPE-0WAjI5lI6gW5BJl-6iEmTiuGAIJKBtZ6irFC9SC-wZ2uTpsNfHV6EQykX6k6hPCMfJ7j8Nktd6o93zMx5oJ1oRepkfP3q005fTDQBPHya-f7nmq0CKma1eY1jfJa97F4DCG-kcAg"></div>
+
+        <input type=''hidden'' name=''q'' value=''EgQjxTZ-GKz6g_IFIhkA8aeDS1GCivjbSEmYx2CPbWkWlzylfH4BMgFy''><input
+        type="hidden" name="continue" value="https://www.youtube.com/watch?v=e1YqueG2gtQ&amp;app=desktop&amp;persist_app=1">
+
+        </form>
+
+        <hr noshade size="1" style="color:#ccc; background-color:#ccc;">
+
+
+        <div style="font-size:13px;">
+
+        <b>About this page</b><br><br>
+
+
+        Our systems have detected unusual traffic from your computer network.  This
+        page checks to see if it&#39;s really you sending the requests, and not a
+        robot.  <a href="#" onclick="document.getElementById(''infoDiv'').style.display=''block'';">Why
+        did this happen?</a><br><br>
+
+
+        <div id="infoDiv" style="display:none; background-color:#eee; padding:10px;
+        margin:0 0 15px 0; line-height:1.4em;">
+
+        This page appears when Google automatically detects requests coming from your
+        computer network which appear to be in violation of the <a href="//www.google.com/policies/terms/">Terms
+        of Service</a>. The block will expire shortly after those requests stop.  In
+        the meantime, solving the above CAPTCHA will let you continue to use our services.<br><br>This
+        traffic may have been sent by malicious software, a browser plug-in, or a
+        script that sends automated requests.  If you share your network connection,
+        ask your administrator for help &mdash; a different computer using the same
+        IP address may be responsible.  <a href="//support.google.com/websearch/answer/86640">Learn
+        more</a><br><br>Sometimes you may be asked to solve the CAPTCHA if you are
+        using advanced terms that robots are known to use, or sending requests very
+        quickly.
+
+        </div>
+
+
+        IP address: 35.197.54.126<br>Time: 2020-02-10T06:50:20Z<br>URL: https://www.youtube.com/watch?v=e1YqueG2gtQ&amp;app=desktop&amp;persist_app=1<br>
+
+        </div>
+
+        </div>
+
+        </body>
+
+        </html>
+
+        '}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Content-Length: ['2962']
+      Content-Type: [text/html]
+      Date: ['Mon, 10 Feb 2020 06:50:20 GMT']
+      Expires: ['Fri, 01 Jan 1990 00:00:00 GMT']
+      Pragma: [no-cache]
+      Server: [HTTP server (unknown)]
+      X-XSS-Protection: ['0']
+    status: {code: 429, message: Too Many Requests}
+version: 1
