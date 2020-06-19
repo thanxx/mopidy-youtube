@@ -7,10 +7,10 @@ import requests
 import youtube_dl
 from cachetools import LRUCache, cached
 from mopidy.models import Image
+from mopidy_youtube import logger
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
-from mopidy_youtube import logger
+from requests.packages.urllib3.util.timeout import Timeout
 
 api_enabled = False
 
@@ -67,39 +67,42 @@ class Entry:
         obj.id = id
         return obj
 
+    def create_object(item):
+        set_api_data = ["title", "channel"]
+        if item["id"]["kind"] == "youtube#video":
+            obj = Video.get(item["id"]["videoId"])
+            if "contentDetails" in item:
+                set_api_data.append("length")
+        elif item["id"]["kind"] == "youtube#playlist":
+            obj = Playlist.get(item["id"]["playlistId"])
+            if "contentDetails" in item:
+                set_api_data.append("video_count")
+        else:
+            obj = []
+            return obj
+        if "thumbnails" in item["snippet"]:
+            set_api_data.append("thumbnails")
+        obj._set_api_data(set_api_data, item)
+        return obj
+
     @classmethod
     def search(cls, q):
         """
         Search for both videos and playlists using a single API call. Fetches
-        only title, thumbnails, channel (extra queries are needed for length and
-        video_count)
+        title, thumbnails, channel. Depending on the API, may also fetch
+        length and video_count. The official youtube API will require an
+        additional API call to fetch legth and video_count (taken care of
+        at Video.load_info and Playlist.load_info).
         """
-
-        def create_object(item):
-            set_api_data = ["title", "channel"]
-            if item["id"]["kind"] == "youtube#video":
-                obj = Video.get(item["id"]["videoId"])
-                if "contentDetails" in item:
-                    set_api_data.append("length")
-            elif item["id"]["kind"] == "youtube#playlist":
-                obj = Playlist.get(item["id"]["playlistId"])
-                if "contentDetails" in item:
-                    set_api_data.append("video_count")
-            else:
-                obj = []
-                return obj
-            if "thumbnails" in item["snippet"]:
-                set_api_data.append("thumbnails")
-            obj._set_api_data(set_api_data, item)
-            return obj
-
         try:
             data = cls.api.search(q)
+            if "error" in data:
+                raise Exception(data["error"])
         except Exception as e:
             logger.error('search error "%s"', e)
             return None
         try:
-            return list(map(create_object, data["items"]))
+            return list(map(cls.create_object, data["items"]))
         except Exception as e:
             logger.error('map error "%s"', e)
             return None
@@ -160,13 +163,16 @@ class Entry:
                     + r"((?P<seconds>\d+)S)?",
                     item["contentDetails"]["duration"],
                 )
-                val = (
-                    int(m.group("weeks") or 0) * 604800
-                    + int(m.group("days") or 0) * 86400
-                    + int(m.group("hours") or 0) * 3600
-                    + int(m.group("minutes") or 0) * 60
-                    + int(m.group("seconds") or 0)
-                )
+                if m:
+                    val = (
+                        int(m.group("weeks") or 0) * 604800
+                        + int(m.group("days") or 0) * 86400
+                        + int(m.group("hours") or 0) * 3600
+                        + int(m.group("minutes") or 0) * 60
+                        + int(m.group("seconds") or 0)
+                    )
+                else:
+                    val = 0
             elif k == "video_count":
                 val = min(
                     int(item["contentDetails"]["itemCount"]),
@@ -210,6 +216,17 @@ class Video(Entry):
             sublist = list[i : i + 50]
             ThreadPool.run(job, (sublist,))
 
+    @classmethod
+    def related_videos(cls, video_id):
+        """
+        loads title, thumbnails, channel (and, optionally, length) of videos
+        that are related to a video.  Number of related videos returned is
+        uncertain. Usually between 1 and 19.  Does not return related
+        playlists.
+        """
+        data = cls.api.list_related_videos(video_id)
+        return list(map(cls.create_object, data["items"]))
+
     @async_property
     def length(self):
         self.load_info([self])
@@ -239,9 +256,10 @@ class Video(Entry):
             try:
                 info = youtube_dl.YoutubeDL(
                     {
-                        "format": "bestaudio/best",
+                        "format": "bestaudio/m4a/mp3/ogg/best",
                         "proxy": self.proxy,
                         "nocheckcertificate": True,
+                        "cachedir": False,
                     }
                 ).extract_info(
                     url="https://www.youtube.com/watch?v=%s" % self.id,
@@ -345,11 +363,11 @@ class Playlist(Entry):
             # start loading video info in the background
             Video.load_info(
                 [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
-            )  # noqa: E501
+            )
 
             self._videos.set(
                 [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
-            )  # noqa: E501
+            )
 
         ThreadPool.run(job)
 
@@ -366,6 +384,18 @@ class Playlist(Entry):
         return False
 
 
+# is this necessary or worthwhile?  Are there any bad
+# consequences that arise if timeout isn't set like this?
+class MyHTTPAdapter(HTTPAdapter):
+    def get(self, *args, **kwargs):
+        kwargs["timeout"] = (6.05, 27)
+        return super(MyHTTPAdapter, self).get(*args, **kwargs)
+
+    def init_poolmanager(self, *args, **kwargs):
+        kwargs["timeout"] = Timeout(connect=6.05, read=27.0)
+        return super(MyHTTPAdapter, self).init_poolmanager(*args, **kwargs)
+
+
 class Client:
     def __init__(self, proxy, headers):
         if not hasattr(type(self), "session"):
@@ -376,7 +406,7 @@ class Client:
         cls,
         proxy,
         headers,
-        retries=3,
+        retries=10,
         backoff_factor=0.3,
         status_forcelist=(500, 502, 504),
         session=None,
@@ -389,7 +419,7 @@ class Client:
             backoff_factor=backoff_factor,
             status_forcelist=status_forcelist,
         )
-        adapter = HTTPAdapter(
+        adapter = MyHTTPAdapter(
             max_retries=retry, pool_maxsize=ThreadPool.threads_max
         )
         cls.session.mount("http://", adapter)

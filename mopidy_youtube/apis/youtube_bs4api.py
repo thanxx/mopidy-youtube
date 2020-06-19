@@ -3,9 +3,9 @@ import re
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
-
 from mopidy_youtube import logger
 from mopidy_youtube.apis.youtube_scrapi import scrAPI
+from mopidy_youtube.apis.youtube_japi import jAPI
 
 
 class bs4API(scrAPI):
@@ -22,13 +22,10 @@ class bs4API(scrAPI):
 
     @classmethod
     def run_search(cls, query):
-        items = []
 
         result = cls.session.get(urljoin(cls.endpoint, "results"), params=query)
-
         if result.status_code == 200:
             soup = BeautifulSoup(result.text, "html.parser")
-
             # hack because youtube result sometimes seem to be missing a </script> tag
             if not soup.find_all(
                 "div", class_=["yt-lockup-video", "yt-lockup-playlist"]
@@ -54,105 +51,154 @@ class bs4API(scrAPI):
             results = soup.find_all(
                 "div", class_=["yt-lockup-video", "yt-lockup-playlist"]
             )
-            for result in results:
-                if "yt-lockup-video" in result.get("class"):
+
+            if not results:
+                logger.info("nothing in the soup, trying japi")
+                json_regex = r'window\["ytInitialData"] = ({.*?});'
+                extracted_json = re.search(json_regex, result.text).group(1)
+                result_json = json.loads(extracted_json)["contents"][
+                    "twoColumnSearchResultsRenderer"
+                ]["primaryContents"]["sectionListRenderer"]["contents"][0][
+                    "itemSectionRenderer"
+                ][
+                    "contents"
+                ]  # noqa: E501
+                return jAPI.json_to_items(cls, result_json)
+            else:
+                return cls.soup_to_items(cls, results)
+
+    def soup_to_items(cls, results):
+        items = []
+        for result in results:
+            if "yt-lockup-video" in result.get("class"):
+                try:
+                    videoId = result["data-context-item-id"]
+                except Exception as e:
+                    # videoID = "Unknown"
+                    logger.error("videoId exception %s" % e)
+                    continue
+
+                try:
+                    title_text = result.find("a", {"aria-describedby": True})
+                    title = title_text.text.strip()
+                except Exception:
+                    try:
+                        title_text = result.find("a", {"title": True})
+                        title = title_text.text.strip()
+                    except Exception as e:
+                        # title = "Unknown"
+                        logger.error("title exception %s" % e, videoId)
+                        continue
+
+                try:
+                    channelTitle_text = result.find(class_="yt-lockup-byline")
+                    channelTitle = channelTitle_text.text.strip()
+                except Exception as e:
+                    # channelTitle = "Unknown"
+                    logger.error("channelTitle exception %s" % e)
+                    continue
+
+                item = {
+                    "id": {"kind": "youtube#video", "videoId": videoId},
+                    "snippet": {
+                        "title": title,
+                        # TODO: full support for thumbnails
+                        "thumbnails": {
+                            "default": {
+                                "url": "https://i.ytimg.com/vi/"
+                                + videoId
+                                + "/default.jpg",
+                                "width": 120,
+                                "height": 90,
+                            },
+                        },
+                        "channelTitle": channelTitle,
+                    },
+                }
+                try:
                     duration_text = result.find(class_="video-time").text
-                    duration = cls.format_duration(
+                    duration = "PT" + cls.format_duration(
                         re.match(cls.time_regex, duration_text)
                     )
-                    item = {
-                        "id": {
-                            "kind": "youtube#video",
-                            "videoId": result["data-context-item-id"],
-                        },
-                        "contentDetails": {"duration": "PT" + duration},
-                        "snippet": {
-                            "title": result.find(
-                                class_="yt-lockup-title"
-                            ).next.text,
-                            # TODO: full support for thumbnails
-                            "thumbnails": {
-                                "default": {
-                                    "url": "https://i.ytimg.com/vi/"
-                                    + result["data-context-item-id"]
-                                    + "/default.jpg",
-                                    "width": 120,
-                                    "height": 90,
-                                },
-                            },
-                            "channelTitle": result.find(
-                                class_="yt-lockup-byline"
-                            ).text,
-                        },
-                    }
-                    items.append(item)
+                except Exception as e:
+                    logger.info(
+                        "no video-time, possibly live: ",
+                        e,
+                        result["data-context-item-id"],
+                    )
+                    duration = "PT0S"
+                item.update({"contentDetails": {"duration": duration}})
+                items.append(item)
 
-                elif "yt-lockup-playlist" in result.get("class"):
-                    item = {
-                        "id": {
-                            "kind": "youtube#playlist",
-                            "playlistId": result.find(class_="yt-lockup-title")
-                            .next["href"]
-                            .partition("list=")[2],
-                        },
-                        "contentDetails": {
-                            "itemCount": result.find(
+            elif "yt-lockup-playlist" in result.get("class"):
+                item = {
+                    "id": {
+                        "kind": "youtube#playlist",
+                        "playlistId": result.find(class_="yt-lockup-title")
+                        .next["href"]
+                        .partition("list=")[2],
+                    },
+                    "contentDetails": {
+                        "itemCount": re.sub(
+                            r"[^\d\.]",
+                            "",
+                            result.find(
                                 class_="formatted-video-count-label"
-                            ).text.split(" ")[0]
-                        },
-                        "snippet": {
-                            "title": result.find(
-                                class_="yt-lockup-title"
-                            ).next.text,
-                            # TODO: full support for thumbnails
-                            "thumbnails": {
-                                "default": {
-                                    "url": (
-                                        "https://i.ytimg.com/vi/"
-                                        + result.find(
-                                            class_="yt-lockup-thumbnail"
-                                        )
-                                        .find("a")["href"]
-                                        .partition("v=")[2]
-                                        .partition("&")[0]
-                                        + "/default.jpg"
-                                    ),
-                                    "width": 120,
-                                    "height": 90,
-                                },
+                            ).text.split(" ")[0],
+                        )
+                    },
+                    "snippet": {
+                        "title": result.find(
+                            class_="yt-lockup-title"
+                        ).next.text,
+                        # TODO: full support for thumbnails
+                        "thumbnails": {
+                            "default": {
+                                "url": (
+                                    "https://i.ytimg.com/vi/"
+                                    + result.find(class_="yt-lockup-thumbnail")
+                                    .find("a")["href"]
+                                    .partition("v=")[2]
+                                    .partition("&")[0]
+                                    + "/default.jpg"
+                                ),
+                                "width": 120,
+                                "height": 90,
                             },
-                            "channelTitle": result.find(
-                                class_="yt-lockup-byline"
-                            ).text,
                         },
-                    }
-                    # don't append radiolist playlists
-                    if str(item["id"]["playlistId"]).startswith("PL"):
-                        items.append(item)
+                        "channelTitle": result.find(
+                            class_="yt-lockup-byline"
+                        ).text,
+                    },
+                }
+                # don't append radiolist playlists
+                if str(item["id"]["playlistId"]).startswith("PL"):
+                    items.append(item)
         return items
 
     @classmethod
     def list_playlistitems(cls, id, page, max_results):
         query = {"list": id, "app": "desktop", "persist_app": 1}
         logger.info("session.get triggered: list_playlist_items")
+        ajax_css = "button[data-uix-load-more-href]"
 
-        items = []
+        videos = items = []
+        if page == "":
+            r = cls.session.get(urljoin(cls.endpoint, "playlist"), params=query)
+            if r.status_code == 200:
+                soup = BeautifulSoup(r.text, "html.parser")
+        else:
+            r = cls.session.get(urljoin(cls.endpoint, page))
+            if r.status_code == 200:
+                soup = BeautifulSoup("".join(r.json().values()), "html.parser")
 
-        r = cls.session.get(urljoin(cls.endpoint, "playlist"), params=query)
-
-        if r.status_code == 200:
-            soup = BeautifulSoup(r.text, "html.parser")
-
+        if soup:
             # get load more button
-            ajax_css = "button[data-uix-load-more-href]"
-            ajax = soup.select(ajax_css)
-            # if there is no more, there is no "Load more" button
-            if ajax:
-                ajax = ajax[0]["data-uix-load-more-href"]
+            full_ajax = soup.select(ajax_css)
+            if len(full_ajax) > 0:
+                ajax = full_ajax[0]["data-uix-load-more-href"]
             else:
                 ajax = None
-
-            # get first visible videos
             videos = [
                 video
                 for video in soup.find_all("tr", {"class": "pl-video"})
@@ -164,75 +210,47 @@ class bs4API(scrAPI):
                 )
             ]
 
-            # get the videos that are behind the ajax curtain
-            while ajax is not None and len(videos) < max_results:
-                r = cls.session.get(urljoin(cls.endpoint, ajax))
-
-                # next html is stored in the json.values()
-                soup = BeautifulSoup("".join(r.json().values()), "html.parser")
-                videos.extend(
-                    [
-                        video
-                        for video in soup.find_all("tr", {"class": "pl-video"})
-                        if all(
-                            [
-                                video.find(class_="timestamp"),
-                                video.find(class_="pl-video-owner"),
-                            ]
+        for video in videos:
+            item = {
+                "id": video["data-video-id"],
+                "contentDetails": {
+                    "duration": "PT"
+                    + cls.format_duration(
+                        re.match(
+                            cls.time_regex, video.find(class_="timestamp").text,
                         )
-                    ]
-                )
-
-                ajax = soup.select(ajax_css)
-                # if empty "Load more" button would be gone
-                if not ajax:
-                    break
-                ajax = ajax[0]["data-uix-load-more-href"]
-
-            del videos[max_results:]
-
-            for video in videos:
-                item = {
-                    "id": video["data-video-id"],
-                    "contentDetails": {
-                        "duration": "PT"
-                        + cls.format_duration(
-                            re.match(
-                                cls.time_regex,
-                                video.find(class_="timestamp").text,
-                            )
-                        ),
-                    },
-                    "snippet": {
-                        "resourceId": {"videoId": video["data-video-id"]},
-                        "title": video["data-title"],
-                        # TODO: full support for thumbnails
-                        "thumbnails": {
-                            "default": {
-                                "url": "https://i.ytimg.com/vi/"
-                                + video["data-video-id"]
-                                + "/default.jpg",
-                                "width": 120,
-                                "height": 90,
-                            },
+                    ),
+                },
+                "snippet": {
+                    "resourceId": {"videoId": video["data-video-id"]},
+                    "title": video["data-title"],
+                    # TODO: full support for thumbnails
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/"
+                            + video["data-video-id"]
+                            + "/default.jpg",
+                            "width": 120,
+                            "height": 90,
                         },
-                        "channelTitle": video.find(class_="pl-video-owner")
-                        .find("a")
-                        .text,
                     },
-                }
+                    "channelTitle": video.find(class_="pl-video-owner")
+                    .find("a")
+                    .text,
+                },
+            }
 
-                items.append(item)
+            items.append(item)
 
-            result = json.loads(
-                json.dumps(
-                    {"nextPageToken": None, "items": items},  # noqa: E501
-                    sort_keys=False,
-                    indent=1,
-                )
+        result = json.loads(
+            json.dumps(
+                {"nextPageToken": ajax, "items": items},
+                sort_keys=False,
+                indent=1,
             )
+        )
 
-            return result
+        return result
 
     @classmethod
     def list_videos(cls, ids):
@@ -251,12 +269,11 @@ class bs4API(scrAPI):
             }
             for id in ids
         ]
-
         for result in [cls.run_search(r)[0] for r in rs]:
             logger.info("session.get triggered: list_videos (experimental)")
-            result.update({"id": result["id"]["videoId"]})
-            items.extend([result])
-
+            if result["id"]["videoId"]:
+                result.update({"id": result["id"]["videoId"]})
+                items.extend([result])
         return json.loads(
             json.dumps({"items": items}, sort_keys=False, indent=1)
         )
@@ -283,6 +300,94 @@ class bs4API(scrAPI):
             logger.info("session.get triggered: list_playlists (experimental)")
             result.update({"id": result["id"]["playlistId"]})
             items.extend([result])
+
+        return json.loads(
+            json.dumps({"items": items}, sort_keys=False, indent=1)
+        )
+
+    @classmethod
+    def list_related_videos(cls, video_id):
+        """
+        returns related videos for a given video_id
+        """
+        items = []
+
+        query = {"v": video_id, "app": "desktop", "persist_app": 1}
+        logger.info("session.get triggered: list_related_videos")
+        result = cls.session.get(cls.endpoint + "watch", params=query)
+        if result.status_code == 200:
+            soup = BeautifulSoup(result.text, "html.parser")
+            results = soup.find_all("li", class_=["related-list-item"])
+            if not results:
+                logger.info("nothing in the soup, trying japi related videos")
+                json_regex = r'window\["ytInitialData"] = ({.*?});'
+                extracted_json = re.search(json_regex, result.text).group(1)
+                result_json = json.loads(extracted_json)["contents"][
+                    "twoColumnWatchNextResults"
+                ]["secondaryResults"]["secondaryResults"][
+                    "results"
+                ]  # noqa: E501
+                items = jAPI.json_to_items(cls, result_json)
+
+            for result in results:
+                if "related-list-item-compact-video" in result.get("class"):
+
+                    try:
+                        videoId = result.find("span", {"data-vid": True})[
+                            "data-vid"
+                        ]
+                    except Exception as e:
+                        # videoID = "Unknown"
+                        logger.error("videoId exception %s" % e)
+                        continue
+
+                    try:
+                        title_text = result.find("span", class_="title")
+                        title = title_text.text.strip()
+                    except Exception as e:
+                        # title = "Unknown"
+                        logger.error("title exception %s" % e)
+                        continue
+
+                    try:
+                        channelTitle_text = result.find(
+                            "span", class_="stat attribution"
+                        )
+                        channelTitle = channelTitle_text.text.strip()
+                    except Exception as e:
+                        # channelTitle = "Unknown"
+                        logger.error("channelTitle exception %s" % e)
+                        continue
+
+                    item = {
+                        "id": {"kind": "youtube#video", "videoId": videoId},
+                        "snippet": {
+                            "title": title,
+                            # TODO: full support for thumbnails
+                            "thumbnails": {
+                                "default": {
+                                    "url": "https://i.ytimg.com/vi/"
+                                    + videoId
+                                    + "/default.jpg",
+                                    "width": 120,
+                                    "height": 90,
+                                },
+                            },
+                            "channelTitle": channelTitle,
+                        },
+                    }
+
+                    try:
+                        duration_text = result.find(class_="video-time")
+                        duration = "PT" + cls.format_duration(
+                            re.match(cls.time_regex, duration_text.text)
+                        )
+                        item.update({"contentDetails": {"duration": duration}})
+                    except Exception as e:
+                        # don't set duration on exception
+                        logger.warn("duration exception %s" % e)
+                        # because duration error doesn't invalidate item (live tracks, eg)
+                    items.append(item)
 
         return json.loads(
             json.dumps({"items": items}, sort_keys=False, indent=1)
