@@ -24,6 +24,8 @@ class bs4API(scrAPI):
     def run_search(cls, query):
 
         result = cls.session.get(urljoin(cls.endpoint, "results"), params=query)
+        with open("/tmp/"+query["search_query"]+".mopidy_youtube.search", mode='wb') as localfile:
+            localfile.write(result.content)
         if result.status_code == 200:
             soup = BeautifulSoup(result.text, "html.parser")
             # hack because youtube result sometimes seem to be missing a </script> tag
