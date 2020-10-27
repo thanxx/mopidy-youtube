@@ -233,7 +233,7 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
 
         if video_id:
             video = youtube.Video.get(video_id)
-            video.audio_url  # start loading
+            # video.audio_url  # start loading
             video.title.get()
             return [
                 Track(
@@ -243,7 +243,9 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
                     comment=video.id,
                     length=video.length.get() * 1000,
                     artists=[Artist(name=video.channel.get())],
-                    album=Album(name="YouTube Video",),
+                    album=Album(
+                        name="YouTube Video",
+                    ),
                     uri="youtube:video/%s.%s"
                     % (safe_url(video.title.get()), video.id),
                 )
@@ -273,8 +275,8 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
             album_name = playlist.title.get()
 
         # load audio_url in the background to be ready for playback
-        for video in videos:
-            video.audio_url  # start loading
+        # for video in videos:
+        #     video.audio_url  # start loading
 
         return [
             Track(
