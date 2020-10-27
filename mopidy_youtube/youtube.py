@@ -9,7 +9,7 @@ from requests.packages.urllib3.util.timeout import Timeout
 
 import pykka
 import youtube_dl
-from cachetools import LRUCache, cached
+from cachetools import TTLCache, cached
 from mopidy.models import Image
 from mopidy_youtube import logger
 
@@ -55,9 +55,10 @@ class Entry:
     """
 
     cache_max_len = 400
+    cache_ttl = 600
 
     @classmethod
-    @cached(cache=LRUCache(maxsize=cache_max_len))
+    @cached(cache=TTLCache(maxsize=cache_max_len, ttl=cache_ttl))
     def get(cls, id):
         """
         Use Video.get(id), Playlist.get(id), instead of Video(id), Playlist(id),
