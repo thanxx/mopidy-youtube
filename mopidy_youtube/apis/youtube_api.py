@@ -85,6 +85,45 @@ class API(Client):
         result = cls.session.get(API.endpoint + "playlists", params=query)
         return result.json()
 
+#    @classmethod
+#    def list_channel_playlists(cls, channel_id):
+#        """
+#        list channel playlists
+#        see https://developers.google.com/youtube/v3/docs/playlists/list
+#        """
+#
+#        query = {
+#            "part": "id,snippet,contentDetails",
+#            "fields": "items(id,snippet(title,thumbnails,channelTitle),"
+#            + "contentDetails(itemCount))",
+#            "channelId": channel_id,
+#            "key": youtube_api_key,
+#        }
+#        logger.info("session.get triggered: list__channel_playlists")
+#        result = cls.session.get(API.endpoint + "playlists", params=query)
+#        return result.json()
+
+
+    @classmethod
+    def list_channel_playlists(cls, channel_id):
+        """
+        list channel playlists
+        see https://developers.google.com/youtube/v3/docs/playlists/list
+        """
+
+        query = {
+            "part": "id,snippet,contentDetails",
+            "fields": "items(id,snippet(title),"
+            + "contentDetails(itemCount))",
+            "maxResults": 50,
+            "channelId": channel_id,
+            "key": youtube_api_key,
+        }
+        logger.info("session.get triggered: list__channel_playlists")
+        result = cls.session.get(API.endpoint + "playlists", params=query)
+        return result.json()
+
+
     @classmethod
     def list_playlistitems(cls, id, page, max_results):
         """

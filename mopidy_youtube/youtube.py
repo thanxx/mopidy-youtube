@@ -105,10 +105,43 @@ class Entry:
             logger.error('search error "%s"', e)
             return None
         try:
+            logger.info(data)
             return list(map(cls.create_object, data["items"]))
         except Exception as e:
             logger.error('map error "%s"', e)
             return None
+
+    @classmethod
+    def get_collection(cls, channel_id):
+        """
+        """
+        set_api_data = ["title", "video_count"]
+        try:
+            data = cls.api.list_channel_playlists(channel_id)
+            if "error" in data:
+                raise Exception(data["error"])
+        except Exception as e:
+            logger.error('list_channel_playlists error "%s"', e)
+            return None
+        try:
+            collection = []
+#           logger.info(data)
+            for item in data["items"]:
+                pl = Playlist.get(item["id"])
+                pl._set_api_data(set_api_data, item)
+                collection.append(pl)
+                print(item)
+            return collection
+#           return list(map(cls.create_object, data["items"]))
+        except Exception as e:
+            logger.error('map error "%s"', e)
+            return None
+
+
+
+
+
+
 
     @classmethod
     def _add_futures(cls, futures_list, fields):
@@ -407,74 +440,108 @@ class Playlist(Entry):
     def is_video(self):
         return False
 
+class Collection(Entry):
+    @classmethod
+    def get(cls, channel_id, list):
+#       self._playlists = pykka.ThreadingFuture()
+        """
+        loads title, thumbnails, video_count, channel of multiple playlists using
+        one API call for every 50 lists. API calls are split in separate threads.
+        """
 
-# class Channel(Entry):
-#
-#     @async_property
-#     def videos(self):
-#         """
-#         loads the list of videos of a channel using one API call for every 50
-#         fetched videos. For every page fetched, Video.load_info is called to
-#         start loading video info in a separate thread.
-#         """
-#
-#         self._videos = pykka.ThreadingFuture()
-#
-#         def job():
-#             data = {"items": []}
-#             page = ""
-#             while (
-#                 page is not None
-#                 and len(data["items"]) < self.playlist_max_videos
-#             ):
-#                 try:
-#                     max_results = min(
-#                         int(self.playlist_max_videos) - len(data["items"]), 50
-#                     )
-#                     result = self.api.list_channelitems(
-#                         self.id, page, max_results
-#                     )
-#                 except Exception as e:
-#                     logger.error('list channel items error "%s"', e)
-#                     break
-#                 if "error" in result:
-#                     logger.error(
-#                         "error in list channel items data for",
-#                         "channel {}, page {}".format(self.id, page),
-#                     )
-#                     break
-#                 page = result.get("nextPageToken") or None
-#                 data["items"].extend(result["items"])
-#
-#             del data["items"][int(self.playlist_max_videos) :]
-#
-#             myvideos = []
-#
-#             for item in data["items"]:
-#                 set_api_data = ["title", "channel"]
-#                 if "contentDetails" in item:
-#                     set_api_data.append("length")
-#                 if "thumbnails" in item["snippet"]:
-#                     set_api_data.append("thumbnails")
-#                 video = Video.get(item["snippet"]["resourceId"]["videoId"])
-#                 video._set_api_data(set_api_data, item)
-#                 myvideos.append(video)
-#
-#             # start loading video info in the background
-#             Video.load_info(
-#                 [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
-#             )
-#
-#             self._videos.set(
-#                 [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
-#             )
-#
-#         ThreadPool.run(job)
-#
-#     @property
-#     def is_video(self):
-#         return False
+        fields = ["title", "video_count", "thumbnails", "channel"]
+#       list = cls._add_futures(list, fields)
+        logger.info('playlists')
+        def job(channel_id):
+            try:
+                data = cls.api.list_channel_playlists(channel_id)
+#               logger.info(data)
+                return list(map(cls.create_object, data["items"]))
+                dict = {item["id"]: item for item in data["items"]}
+                logger.info(dict)
+            except Exception as e:
+                logger.error('list_channel_playlists error "%s"', e)
+                dict = {}
+            logger.info(len(dict))
+#           for pl in sublist:
+#           pl._set_api_data(fields, dict.get(pl.id))
 
+        # 50 items at a time, make sure order is deterministic so that HTTP
+        # requests are replayable in tests
+#       for i in range(0, len(list), 50):
+#           sublist = list[i : i + 50]
+        ThreadPool.run(job, (channel_id,))
+
+    @async_property
+    def video_count(self):
+        self.load_info([self])
+
+    @async_property
+    def thumbnails(self):
+        self.load_info([self])
+
+    @property
+    def is_video(self):
+        return False
+
+#class Channel(Entry):
+#
+#    @async_property
+#    def videos(self):
+#        """
+#        loads the list of videos of a channel using one API call for every 50
+#        fetched videos. For every page fetched, Video.load_info is called to
+#        start loading video info in a separate thread.
+#        """
+#        self._videos = pykka.ThreadingFuture()
+#        def job():
+#           data = {"items": []}
+#           page = ""
+#           while (
+#               page is not None
+#               and len(data["items"]) < self.playlist_max_videos
+#           ):
+#               try:
+#                   max_results = min(
+#                      int(self.playlist_max_videos) - len(data["items"]), 50
+#                  )
+#                   result = self.api.list_channelitems(
+#                       self.id, page, max_results
+#                  )
+#               except Exception as e:
+#                   logger.error('list channel items error "%s"', e)
+#                   break
+#               if "error" in result:
+#                   logger.error(
+#                       "error in list channel items data for",
+#                       "channel {}, page {}".format(self.id, page),
+#                   )
+#                   break
+#               page = result.get("nextPageToken") or None
+#               data["items"].extend(result["items"])
+#           del data["items"][int(self.playlist_max_videos) :]
+#           myvideos = []
+#            for item in data["items"]:
+#               set_api_data = ["title", "channel"]
+#               if "contentDetails" in item:
+#                   set_api_data.append("length")
+#               if "thumbnails" in item["snippet"]:
+#                   set_api_data.append("thumbnails")
+#               video = Video.get(item["snippet"]["resourceId"]["videoId"])
+#               video._set_api_data(set_api_data, item)
+#               myvideos.append(video)
+#            # start loading video info in the background
+#           Video.load_info(
+#               [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
+#           )
+#            self._videos.set(
+#               [x for _, x in zip(range(self.playlist_max_videos), myvideos)]
+#           )
+#        ThreadPool.run(job)
+
+#   @property
+#   def is_video(self):
+#       return False
 # is this necessary or worthwhile?  Are there any bad
 # consequences that arise if timeout isn't set like this?
 class MyHTTPAdapter(HTTPAdapter):

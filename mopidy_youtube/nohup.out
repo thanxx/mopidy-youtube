@@ -1,0 +1,434 @@
+INFO     2021-02-02 22:25:36,633 [401932:MainThread] mopidy.__main__
+  Starting Mopidy 3.0.2
+INFO     2021-02-02 22:25:36,730 [401932:MainThread] mopidy.config
+  Loading config from builtin defaults
+INFO     2021-02-02 22:25:36,744 [401932:MainThread] mopidy.config
+  Loading config from file:///root/.config/mopidy/mopidy.conf
+INFO     2021-02-02 22:25:36,749 [401932:MainThread] mopidy.config
+  Loading config from command line options
+WARNING  2021-02-02 22:25:36,766 [401932:MainThread] mopidy.config
+  Ignoring config section 'mopidy-autoplay' because no matching extension was found
+INFO     2021-02-02 22:25:37,786 [401932:MainThread] mopidy.__main__
+  Enabled extensions: mpd, m3u, youtube, http, musicbox_webclient, stream, softwaremixer, file, autoplay
+INFO     2021-02-02 22:25:37,786 [401932:MainThread] mopidy.__main__
+  Disabled extensions: none
+INFO     2021-02-02 22:25:37,860 [401932:MainThread] mopidy_autoplay
+  Mopidy-Autoplay 0.2.1
+INFO     2021-02-02 22:25:39,972 [401932:MainThread] mopidy.commands
+  Starting Mopidy mixer: SoftwareMixer
+INFO     2021-02-02 22:25:39,977 [401932:MainThread] mopidy.commands
+  Starting Mopidy audio
+INFO     2021-02-02 22:25:39,984 [401932:MainThread] mopidy.commands
+  Starting Mopidy backends: YouTubeBackend, FileBackend, M3UBackend, StreamBackend
+INFO     2021-02-02 22:25:40,001 [401932:YouTubeBackend-3] mopidy_youtube
+  session.get triggered: search
+INFO     2021-02-02 22:25:40,054 [401932:Audio-2] mopidy.audio.actor
+  Audio output set to "audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/snapfifo"
+INFO     2021-02-02 22:25:40,445 [401932:YouTubeBackend-3] mopidy_youtube
+  {'items': [{'id': {'kind': 'youtube#video', 'videoId': 'M4j4dp-Pj0o'}, 'snippet': {'title': 'Brave India pull off the great escape at the SCG | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/M4j4dp-Pj0o/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'h6oRraSOyos'}, 'snippet': {'title': 'SNEAKY SCHOOL HACKS FOR A TEST! || Funny School DIYs And Tricks by 123 Go! Live', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/h6oRraSOyos/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': '123 GO! Live'}}, {'id': {'kind': 'youtube#video', 'videoId': 'v2bAEek6nc4'}, 'snippet': {'title': 'India’s bowlers fire on entertaining Boxing Day | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/v2bAEek6nc4/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'IDkOrTjjUho'}, 'snippet': {'title': 'AO VIVO: Starship SN9 Flight Test', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/IDkOrTjjUho/default_live.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'Café e Ciência'}}, {'id': {'kind': 'youtube#video', 'videoId': 'Z1ut5GVm-HU'}, 'snippet': {'title': 'Aussies grab late wickets after Green, Smith fire | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/Z1ut5GVm-HU/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'W2RT3YIPSYU'}, 'snippet': {'title': 'India level series at MCG with convincing eight-wicket win | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/W2RT3YIPSYU/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'BtF-3sseK3Q'}, 'snippet': {'title': 'Labuschagne, Pucovski fifties boost Aussies amid the rain | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/BtF-3sseK3Q/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'a6209CR15NQ'}, 'snippet': {'title': 'Experiment Car vs Grenade | Crushing crunchy &amp; soft things by car | Test Ex', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/a6209CR15NQ/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'Test Ex'}}, {'id': {'kind': 'youtube#video', 'videoId': '6go1ZtaZfTk'}, 'snippet': {'title': 'Bowling, fielding gives Australia the edge over India | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/6go1ZtaZfTk/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'ezV6Ry2LVyI'}, 'snippet': {'title': 'Siraj five, Smith runs help set stage for grand finale | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/ezV6Ry2LVyI/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': 'TnC2lAbyD0w'}, 'snippet': {'title': 'Test x Bridgez &quot; Pretty Girl &quot; (Official Music Video)', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/TnC2lAbyD0w/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'Test410'}}, {'id': {'kind': 'youtube#video', 'videoId': 'poaCBNRtZAs'}, 'snippet': {'title': 'Late wickets boost Australia after Smith hundred | Vodafone Test Series 2020-21', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/poaCBNRtZAs/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'cricket.com.au'}}, {'id': {'kind': 'youtube#video', 'videoId': '-KGnRe1f2DA'}, 'snippet': {'title': 'What&#39;s Your True Spirit Animal? Personality Test', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/-KGnRe1f2DA/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'BRIGHT SIDE'}}, {'id': {'kind': 'youtube#video', 'videoId': 'pyKmVy2TC2E'}, 'snippet': {'title': 'A Simple Test Will Reveal Your Deepest Fear', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/pyKmVy2TC2E/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'BRIGHT SIDE'}}, {'id': {'kind': 'youtube#video', 'videoId': 'iVbopWyBR5Y'}, 'snippet': {'title': 'A Color Test That Can Tell Your Mental Age', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/iVbopWyBR5Y/default.jpg', 'width': 120, 'height': 90}}, 'channelTitle': 'BRIGHT SIDE'}}]}
+INFO     2021-02-02 22:25:40,455 [401932:YouTubeBackend-3] mopidy_youtube
+  YouTube API key verified
+INFO     2021-02-02 22:25:40,458 [401932:MainThread] mopidy.commands
+  Starting Mopidy core
+INFO     2021-02-02 22:25:40,494 [401932:MainThread] mopidy.commands
+  Starting Mopidy frontends: MpdFrontend, AutoplayFrontend, YouTubeAutoplayer, HttpFrontend
+INFO     2021-02-02 22:25:40,497 [401932:MainThread] mopidy_mpd.actor
+  MPD server running at [::ffff:0.0.0.0]:6600
+INFO     2021-02-02 22:25:40,545 [401932:HttpFrontend-12] mopidy.http.actor
+  HTTP server running at [::ffff:0.0.0.0]:6680
+INFO     2021-02-02 22:25:40,548 [401932:MainThread] mopidy.commands
+  Starting GLib mainloop
+WARNING  2021-02-02 22:25:40,596 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Ambient/Ambient_YT/%2525E5%2525B0%25258F%2525E4%2525B9%252585%2525E4%2525BF%25259D%252520%2525E9%25259A%252586%252520Takashi%252520Kokubo%252520%252520-%252520Oasis%252520of%252520the%252520Wind%252520%252528Full%252520Album%252529-AIddaEmYE6Y.opus: gst-resource-error-quark: Resource not found. (3)
+WARNING  2021-02-02 22:25:40,701 [401932:Audio-2] mopidy.audio.actor
+  Setting GStreamer state to GST_STATE_PLAYING failed
+WARNING  2021-02-02 22:25:40,703 [401932:Core-7] mopidy.core.tracklist
+  Track is not playable: file:///mnt/share/Music/Alex/Ambient/Ambient_YT/%2525E5%2525B0%25258F%2525E4%2525B9%252585%2525E4%2525BF%25259D%252520%2525E9%25259A%252586%252520Takashi%252520Kokubo%252520%252520-%252520Oasis%252520of%252520the%252520Wind%252520%252528Full%252520Album%252529-AIddaEmYE6Y.opus
+ERROR    2021-02-02 22:25:40,709 [401932:MainThread] mopidy.audio.gst
+  GStreamer error: Resource not found.
+INFO     2021-02-02 22:25:46,132 [401932:MpdSession-13] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48954
+INFO     2021-02-02 22:25:46,154 [401932:MpdSession-14] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48956
+INFO     2021-02-02 22:25:51,933 [401932:MpdSession-15] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48960
+INFO     2021-02-02 22:25:59,476 [401932:MpdSession-17] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48962
+INFO     2021-02-02 22:26:20,843 [401932:MpdSession-18] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48968
+INFO     2021-02-02 22:26:23,047 [401932:MpdSession-19] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48970
+INFO     2021-02-02 22:26:23,062 [401932:MpdSession-20] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48972
+INFO     2021-02-02 22:26:43,438 [401932:MpdSession-21] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:48998
+INFO     2021-02-02 22:39:24,630 [401932:MpdSession-22] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49124
+INFO     2021-02-02 22:39:24,648 [401932:MpdSession-23] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49126
+INFO     2021-02-02 22:40:10,841 [401932:MpdSession-24] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49134
+INFO     2021-02-02 22:40:48,284 [401932:MpdSession-26] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49140
+INFO     2021-02-02 22:41:09,203 [401932:MpdSession-27] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49144
+INFO     2021-02-02 22:41:48,358 [401932:MpdSession-28] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49154
+INFO     2021-02-02 23:25:51,957 [401932:MpdSession-30] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49714
+INFO     2021-02-02 23:25:51,980 [401932:MpdSession-31] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49716
+INFO     2021-02-02 23:26:23,234 [401932:MpdSession-32] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:49744
+INFO     2021-02-02 23:56:09,113 [401932:MpdSession-34] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50118
+INFO     2021-02-02 23:56:09,136 [401932:MpdSession-35] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50120
+INFO     2021-02-02 23:56:15,325 [401932:MpdSession-36] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50130
+INFO     2021-02-02 23:56:25,382 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-02 23:56:25,382 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:
+INFO     2021-02-02 23:56:26,303 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-02 23:56:26,303 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:collection/CHNL.UCKLtqNl0BkPfwM0Wzb4cSvw
+INFO     2021-02-02 23:56:26,304 [401932:YouTubeBackend-3] mopidy_youtube
+  entered collection
+INFO     2021-02-02 23:56:26,304 [401932:YouTubeBackend-3] mopidy_youtube
+  UCKLtqNl0BkPfwM0Wzb4cSvw
+INFO     2021-02-02 23:56:26,304 [401932:YouTubeBackend-3] mopidy_youtube
+  session.get triggered: list__channel_playlists
+INFO     2021-02-02 23:56:29,081 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-02 23:56:29,081 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:playlist/Chill 2020.PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU
+INFO     2021-02-02 23:56:29,082 [401932:YouTubeBackend-3] mopidy_youtube
+  entered playlist
+INFO     2021-02-02 23:56:29,083 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:playlist/Chill 2020.PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU"
+INFO     2021-02-02 23:56:29,086 [401932:Thread-37] mopidy_youtube
+  session.get triggered: list_playlistitems
+INFO     2021-02-02 23:56:29,195 [401932:Thread-38] mopidy_youtube
+  session.get triggered: list_videos
+INFO     2021-02-02 23:56:33,729 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Lofi Hip Hop Radio - relaxing beats to chillstudy to.52SlPeGEHVM"
+INFO     2021-02-02 23:56:34,063 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/LOFI.e97w-GHsRMY"
+INFO     2021-02-02 23:56:34,696 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Hello Meteor - The Coastal Obscure Full Album.ab9nE0htMho"
+INFO     2021-02-02 23:56:34,921 [401932:MpdSession-55] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50132
+INFO     2021-02-02 23:56:35,373 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Hello Meteor - mu mea Full Album.UhCNC5uQgts"
+INFO     2021-02-02 23:56:35,727 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-02 23:56:35,941 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:playlist/Chill 2020.PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU
+INFO     2021-02-02 23:56:36,011 [401932:YouTubeBackend-3] mopidy_youtube
+  entered playlist
+INFO     2021-02-02 23:56:36,082 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:playlist/Chill 2020.PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU"
+INFO     2021-02-02 23:56:36,820 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Haruka Nakamura ft Uyama Hiroto - Sunset Line - 2013.7L6B1gLFMB8"
+[youtube] UhCNC5uQgts: Downloading webpage
+{'id': 'PLVWkvsDBrJmZOVLgkQwr6LnBrO5LevYv2', 'snippet': {'title': 'Ambient 2021'}, 'contentDetails': {'itemCount': 3}}
+{'id': 'PLVWkvsDBrJmY1_aUV_uNwxFxjaUEEKEwO', 'snippet': {'title': 'Easy listening, bossa, etc'}, 'contentDetails': {'itemCount': 12}}
+{'id': 'PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU', 'snippet': {'title': 'Chill 2020'}, 'contentDetails': {'itemCount': 21}}
+{'id': 'PLVWkvsDBrJmYK6VROwzofHzjbRJvZFHiw', 'snippet': {'title': 'Deep \\ Tech House'}, 'contentDetails': {'itemCount': 9}}
+{'id': 'PLVWkvsDBrJmbtRShYZ4evireiAV0C1DAV', 'snippet': {'title': 'Nature'}, 'contentDetails': {'itemCount': 17}}
+{'id': 'PLVWkvsDBrJmbtrQub-61rbo0wpL1ANMF9', 'snippet': {'title': 'Vaporwave'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmbXLrzN-vqjG-EBxYFGzlhn', 'snippet': {'title': 'Idm'}, 'contentDetails': {'itemCount': 6}}
+{'id': 'PLVWkvsDBrJmb_XS76-hUmU0z9MQ7M2fGA', 'snippet': {'title': 'classic'}, 'contentDetails': {'itemCount': 2}}
+{'id': 'PLVWkvsDBrJmaTMTg3a6729FkwGcbeLqKs', 'snippet': {'title': 'ретро'}, 'contentDetails': {'itemCount': 7}}
+{'id': 'PLVWkvsDBrJmYx7nHNLekgcBN82IWvUCi3', 'snippet': {'title': 'jazz'}, 'contentDetails': {'itemCount': 0}}
+{'id': 'PLVWkvsDBrJmZUw-pS4Qzs_Ac04SeqrViV', 'snippet': {'title': 'chill'}, 'contentDetails': {'itemCount': 18}}
+{'id': 'PLVWkvsDBrJmbHgY1IwlFxzo-HDZw-zCX9', 'snippet': {'title': 'Рецепты'}, 'contentDetails': {'itemCount': 21}}
+{'id': 'PLVWkvsDBrJmYJkrDOkWzSM26MdkgW0B7x', 'snippet': {'title': 'IT'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmYzemPpwvLkn0AfMXPWfm4s', 'snippet': {'title': 'Deep & dub'}, 'contentDetails': {'itemCount': 45}}
+{'id': 'PLVWkvsDBrJmbhsW2WwtsoXOFr4eTSzwEr', 'snippet': {'title': 'Ambient'}, 'contentDetails': {'itemCount': 35}}
+{'id': 'PLVWkvsDBrJmbJXAHCerPNljEhKubX3RU5', 'snippet': {'title': 'UK house'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmaFGx-aHNrzWJrGLMluIV8e', 'snippet': {'title': 'Old Days House'}, 'contentDetails': {'itemCount': 4}}
+{'id': 'PLVWkvsDBrJmYCEt1d_U0IrRIlZJ520jNg', 'snippet': {'title': 'Progressive House'}, 'contentDetails': {'itemCount': 10}}
+{'id': 'PLVWkvsDBrJmb6oaaQBJADuydGmj2YKur6', 'snippet': {'title': 'Chillhop'}, 'contentDetails': {'itemCount': 91}}
+INFO     2021-02-02 23:56:37,242 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Lofi Hip Hop Radio - relaxing beats to chillstudy to.52SlPeGEHVM"
+[youtube] IRWphSvsxbY: Downloading webpage
+[youtube] 7L6B1gLFMB8: Downloading webpage
+INFO     2021-02-02 23:56:37,335 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Radio Juicy - The Chronic Full BeatTape.IRWphSvsxbY"
+[youtube] 52SlPeGEHVM: Downloading webpage
+[youtube] 8FgnsFuYODY: Downloading webpage
+INFO     2021-02-02 23:56:37,422 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/LOFI.e97w-GHsRMY"
+[youtube] naxc9pMt0us: Downloading webpage
+[youtube] -O7MOuNkPos: Downloading webpage
+[youtube] ab9nE0htMho: Downloading webpage
+[youtube] VD2MRsdmuNo: Downloading webpage
+INFO     2021-02-02 23:56:37,452 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/FUTURES Vol. 6 Full Album - Lofi Hip Hop Beats Chill.e_T2Gw_zPuA"
+[youtube] 7NOSDKb0HlU: Downloading webpage
+[youtube] hgCzIQp_jlM: Downloading webpage
+INFO     2021-02-02 23:56:37,465 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Hello Meteor - The Coastal Obscure Full Album.ab9nE0htMho"
+[youtube] e97w-GHsRMY: Downloading webpage
+INFO     2021-02-02 23:56:37,470 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Lo-fi Hip-hop Radio - Beats to StudyRelax.GmgJmIHkhVI"
+[youtube] GmgJmIHkhVI: Downloading webpage
+[youtube] e_T2Gw_zPuA: Downloading webpage
+[youtube] BYU_mY9sjHw: Downloading webpage
+INFO     2021-02-02 23:56:37,478 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Hello Meteor - mu mea Full Album.UhCNC5uQgts"
+[youtube] _9ODL41lGb8: Downloading webpage
+INFO     2021-02-02 23:56:37,495 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Stardust.naxc9pMt0us"
+INFO     2021-02-02 23:56:37,512 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Haruka Nakamura ft Uyama Hiroto - Sunset Line - 2013.7L6B1gLFMB8"
+INFO     2021-02-02 23:56:37,532 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Melancholy on 34th Street Festive Lofi Hiphop Mix.hgCzIQp_jlM"
+INFO     2021-02-02 23:56:37,544 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Radio Juicy - The Chronic Full BeatTape.IRWphSvsxbY"
+INFO     2021-02-02 23:56:37,550 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/lofi hip hop radio - beats to studyrelax to.7NOSDKb0HlU"
+INFO     2021-02-02 23:56:37,555 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/FUTURES Vol. 6 Full Album - Lofi Hip Hop Beats Chill.e_T2Gw_zPuA"
+INFO     2021-02-02 23:56:37,558 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Lo-fi For Winter (Only) Crisp Hiphop Mix.-O7MOuNkPos"
+INFO     2021-02-02 23:56:37,562 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Lo-fi Hip-hop Radio - Beats to StudyRelax.GmgJmIHkhVI"
+INFO     2021-02-02 23:56:37,566 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/White Christmas - Winter Coffee Jazz - December Piano Jazz Bossa Nova music for Sleep Cozy Night.VD2MRsdmuNo"
+INFO     2021-02-02 23:56:37,570 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Stardust.naxc9pMt0us"
+INFO     2021-02-02 23:56:37,573 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Christmas Radio 247 Old Christmas Songs Collection Traditional Christmas Carols 2020._9ODL41lGb8"
+INFO     2021-02-02 23:56:37,579 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Melancholy on 34th Street Festive Lofi Hiphop Mix.hgCzIQp_jlM"
+INFO     2021-02-02 23:56:37,607 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Perfect Dream.8FgnsFuYODY"
+INFO     2021-02-02 23:56:37,634 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/lofi hip hop radio - beats to studyrelax to.7NOSDKb0HlU"
+INFO     2021-02-02 23:56:37,651 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Lo-fi For Winter (Only) Crisp Hiphop Mix.-O7MOuNkPos"
+INFO     2021-02-02 23:56:37,667 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Snow-Fi Lo-Fi Instrumental Jazzy Chill Hop.CPI7S9OkKg4"
+INFO     2021-02-02 23:56:37,681 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/White Christmas - Winter Coffee Jazz - December Piano Jazz Bossa Nova music for Sleep Cozy Night.VD2MRsdmuNo"
+INFO     2021-02-02 23:56:37,702 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/CHILL RADIO 247.ZiTSSr1JocA"
+INFO     2021-02-02 23:56:37,714 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Christmas Radio 247 Old Christmas Songs Collection Traditional Christmas Carols 2020._9ODL41lGb8"
+INFO     2021-02-02 23:56:37,723 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Lofi Hip Hop Beats Japanese Lofi Playlist 2021 No Copyright Lofi Chillhop Beats.R7binmOaMus"
+INFO     2021-02-02 23:56:37,731 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Perfect Dream.8FgnsFuYODY"
+INFO     2021-02-02 23:56:37,738 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Feel good City Pop Beats to relax - Neo Chill Radio Ch3 City Pop Vaporwave Synthwave.BYU_mY9sjHw"
+INFO     2021-02-02 23:56:37,749 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Snow-Fi Lo-Fi Instrumental Jazzy Chill Hop.CPI7S9OkKg4"
+INFO     2021-02-02 23:56:37,760 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/CHILL RADIO 247.ZiTSSr1JocA"
+INFO     2021-02-02 23:56:37,780 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Lofi Hip Hop Beats Japanese Lofi Playlist 2021 No Copyright Lofi Chillhop Beats.R7binmOaMus"
+INFO     2021-02-02 23:56:37,791 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/247 Feel good City Pop Beats to relax - Neo Chill Radio Ch3 City Pop Vaporwave Synthwave.BYU_mY9sjHw"
+[youtube] e_T2Gw_zPuA: Downloading js player f6ef8aad
+[youtube] 8FgnsFuYODY: Downloading js player f6ef8aad
+[youtube] 7L6B1gLFMB8: Downloading js player f6ef8aad
+[youtube] IRWphSvsxbY: Downloading js player f6ef8aad
+[youtube] R7binmOaMus: Downloading webpage
+[youtube] 7NOSDKb0HlU: Downloading m3u8 information
+[youtube] e97w-GHsRMY: Downloading m3u8 information
+[youtube] UhCNC5uQgts: Downloading MPD manifest
+[youtube] ZiTSSr1JocA: Downloading webpage
+[youtube] 52SlPeGEHVM: Downloading m3u8 information
+[youtube] VD2MRsdmuNo: Downloading js player f6ef8aad
+[youtube] CPI7S9OkKg4: Downloading webpage
+ERROR: This live stream recording is not available.
+[youtube] naxc9pMt0us: Downloading js player f6ef8aad
+ERROR    2021-02-02 23:56:40,728 [401932:Thread-52] mopidy_youtube
+  audio_url error "ERROR: This live stream recording is not available."
+[youtube] BYU_mY9sjHw: Downloading m3u8 information
+[youtube] 7NOSDKb0HlU: Downloading MPD manifest
+[youtube] e97w-GHsRMY: Downloading MPD manifest
+[youtube] 52SlPeGEHVM: Downloading MPD manifest
+[youtube] BYU_mY9sjHw: Downloading MPD manifest
+[youtube] GmgJmIHkhVI: Downloading m3u8 information
+[youtube] R7binmOaMus: Downloading m3u8 information
+ERROR: This live stream recording is not available.
+ERROR    2021-02-02 23:56:41,876 [401932:Thread-48] mopidy_youtube
+  audio_url error "ERROR: This live stream recording is not available."
+[youtube] GmgJmIHkhVI: Downloading MPD manifest
+[youtube] R7binmOaMus: Downloading MPD manifest
+INFO     2021-02-02 23:56:47,229 [401932:MpdSession-56] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50134
+[youtube] IRWphSvsxbY: Downloading js player f6ef8aad
+INFO     2021-02-02 23:56:49,595 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Perfect Dream.8FgnsFuYODY"
+[youtube] 7L6B1gLFMB8: Downloading js player f6ef8aad
+INFO     2021-02-02 23:56:49,700 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube PlaybackProvider.translate_uri "youtube:video/Perfect Dream.8FgnsFuYODY"
+[youtube] 8FgnsFuYODY: Downloading js player f6ef8aad
+[youtube] e_T2Gw_zPuA: Downloading js player f6ef8aad
+[youtube] VD2MRsdmuNo: Downloading js player f6ef8aad
+[youtube] naxc9pMt0us: Downloading js player f6ef8aad
+INFO     2021-02-02 23:56:55,077 [401932:MpdSession-57] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50136
+INFO     2021-02-02 23:56:59,335 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Perfect Dream.8FgnsFuYODY"
+INFO     2021-02-02 23:56:59,850 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube PlaybackProvider.translate_uri "youtube:video/Perfect Dream.8FgnsFuYODY"
+INFO     2021-02-02 23:57:00,690 [401932:MpdSession-58] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50146
+INFO     2021-02-02 23:57:01,043 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube LibraryProvider.lookup "youtube:video/Perfect Dream.8FgnsFuYODY"
+WARNING  2021-02-02 23:57:01,431 [401932:MainThread] mopidy.audio.actor
+  Race condition happened. See #1222 and #1430.
+INFO     2021-02-02 23:57:01,500 [401932:YouTubeBackend-3] mopidy_youtube
+  youtube PlaybackProvider.translate_uri "youtube:video/Perfect Dream.8FgnsFuYODY"
+INFO     2021-02-02 23:57:12,847 [401932:MpdSession-61] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50150
+INFO     2021-02-02 23:57:25,343 [401932:MpdSession-62] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50154
+INFO     2021-02-02 23:57:25,359 [401932:MpdSession-63] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50156
+INFO     2021-02-02 23:57:50,031 [401932:MpdSession-64] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50202
+INFO     2021-02-02 23:59:00,055 [401932:MpdSession-65] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50214
+INFO     2021-02-02 23:59:00,070 [401932:MpdSession-66] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50216
+INFO     2021-02-02 23:59:24,748 [401932:MpdSession-67] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50222
+INFO     2021-02-03 00:08:58,678 [401932:MpdSession-68] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50278
+INFO     2021-02-03 00:08:58,699 [401932:MpdSession-69] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50280
+INFO     2021-02-03 00:09:24,027 [401932:MpdSession-70] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50282
+INFO     2021-02-03 00:09:43,364 [401932:MpdSession-71] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50286
+INFO     2021-02-03 00:10:28,274 [401932:MpdSession-72] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50296
+INFO     2021-02-03 00:10:28,289 [401932:MpdSession-73] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50298
+INFO     2021-02-03 00:11:04,014 [401932:MpdSession-74] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50304
+INFO     2021-02-03 00:13:24,439 [401932:MpdSession-75] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50318
+INFO     2021-02-03 00:13:24,490 [401932:MpdSession-76] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50320
+INFO     2021-02-03 00:13:37,299 [401932:MpdSession-77] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50324
+INFO     2021-02-03 00:13:43,408 [401932:MpdSession-78] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50326
+INFO     2021-02-03 00:13:43,413 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-03 00:13:43,414 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:collection/CHNL.UCKLtqNl0BkPfwM0Wzb4cSvw
+INFO     2021-02-03 00:13:43,414 [401932:YouTubeBackend-3] mopidy_youtube
+  entered collection
+INFO     2021-02-03 00:13:43,415 [401932:YouTubeBackend-3] mopidy_youtube
+  UCKLtqNl0BkPfwM0Wzb4cSvw
+INFO     2021-02-03 00:13:43,415 [401932:YouTubeBackend-3] mopidy_youtube
+  session.get triggered: list__channel_playlists
+INFO     2021-02-03 00:13:44,350 [401932:YouTubeBackend-3] mopidy_youtube
+  __________________
+INFO     2021-02-03 00:13:44,351 [401932:YouTubeBackend-3] mopidy_youtube
+  browse: youtube:
+INFO     2021-02-03 00:14:02,848 [401932:MpdSession-79] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50330
+INFO     2021-02-03 00:14:19,495 [401932:MpdSession-80] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50332
+INFO     2021-02-03 00:14:54,481 [401932:MpdSession-81] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50340
+INFO     2021-02-03 00:15:14,867 [401932:MpdSession-82] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:50370
+INFO     2021-02-03 14:12:18,431 [401932:MpdSession-85] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56842
+INFO     2021-02-03 14:12:18,459 [401932:MpdSession-86] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56844
+INFO     2021-02-03 14:12:35,480 [401932:MpdSession-87] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56878
+INFO     2021-02-03 14:12:43,771 [401932:MpdSession-88] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56884
+INFO     2021-02-03 14:12:49,286 [401932:MpdSession-89] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56888
+INFO     2021-02-03 14:12:54,804 [401932:MpdSession-90] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56890
+WARNING  2021-02-03 14:12:57,276 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Current/garden_dance/garden_dance: gst-stream-error-quark: This appears to be a text file (5)
+WARNING  2021-02-03 14:13:01,445 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Current/garden_dance/garden_dance: gst-stream-error-quark: This appears to be a text file (5)
+WARNING  2021-02-03 14:13:02,967 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Current/garden_dance/garden_dance: gst-stream-error-quark: This appears to be a text file (5)
+INFO     2021-02-03 14:13:11,580 [401932:MpdSession-91] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:56912
+INFO     2021-02-03 23:00:48,534 [401932:MpdSession-92] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34490
+INFO     2021-02-03 23:00:48,567 [401932:MpdSession-93] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34492
+INFO     2021-02-03 23:01:05,428 [401932:MpdSession-94] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34522
+INFO     2021-02-03 23:01:32,574 [401932:MpdSession-95] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34524
+INFO     2021-02-03 23:02:06,481 [401932:MpdSession-96] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34554
+INFO     2021-02-03 23:04:09,549 [401932:MpdSession-97] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34562
+INFO     2021-02-03 23:04:09,570 [401932:MpdSession-98] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34564
+INFO     2021-02-03 23:04:56,648 [401932:MpdSession-99] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:34596
+INFO     2021-02-03 23:37:11,067 [401932:MpdSession-101] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35316
+INFO     2021-02-03 23:37:11,081 [401932:MpdSession-102] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35318
+INFO     2021-02-03 23:37:34,417 [401932:MpdSession-103] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35350
+INFO     2021-02-04 00:13:57,595 [401932:MpdSession-104] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35462
+INFO     2021-02-04 00:13:57,611 [401932:MpdSession-105] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35464
+INFO     2021-02-04 00:14:05,339 [401932:MpdSession-106] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35514
+WARNING  2021-02-04 00:14:11,629 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Ambient/Ambient_YT/ambient-sync.sh: gst-stream-error-quark: This appears to be a text file (5)
+WARNING  2021-02-04 00:14:11,666 [401932:FileBackend-4] mopidy.file.library
+  Failed looking up file:///mnt/share/Music/Alex/Ambient/Ambient_YT/list: gst-stream-error-quark: This appears to be a text file (5)
+INFO     2021-02-04 00:14:25,098 [401932:MpdSession-107] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35522
+INFO     2021-02-04 00:14:49,810 [401932:MpdSession-108] mopidy_mpd.session
+  New MPD connection from [::ffff:192.168.1.240]:35536
+INFO     2021-02-05 19:16:32,611 [401932:MainThread] mopidy.commands
+  GLib mainloop got SIGTERM. Exiting...
+INFO     2021-02-05 19:16:32,621 [401932:MainThread] mopidy.commands
+  Stopping Mopidy frontends
+INFO     2021-02-05 19:16:32,669 [401932:MainThread] mopidy.commands
+  Stopping Mopidy core
+INFO     2021-02-05 19:16:32,677 [401932:MainThread] mopidy.commands
+  Stopping Mopidy backends
+INFO     2021-02-05 19:16:32,698 [401932:MainThread] mopidy.commands
+  Stopping Mopidy audio
+INFO     2021-02-05 19:16:32,801 [401932:MainThread] mopidy.commands
+  Stopping Mopidy mixer
+{'id': 'PLVWkvsDBrJmZOVLgkQwr6LnBrO5LevYv2', 'snippet': {'title': 'Ambient 2021'}, 'contentDetails': {'itemCount': 3}}
+{'id': 'PLVWkvsDBrJmY1_aUV_uNwxFxjaUEEKEwO', 'snippet': {'title': 'Easy listening, bossa, etc'}, 'contentDetails': {'itemCount': 12}}
+{'id': 'PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU', 'snippet': {'title': 'Chill 2020'}, 'contentDetails': {'itemCount': 21}}
+{'id': 'PLVWkvsDBrJmYK6VROwzofHzjbRJvZFHiw', 'snippet': {'title': 'Deep \\ Tech House'}, 'contentDetails': {'itemCount': 9}}
+{'id': 'PLVWkvsDBrJmbtRShYZ4evireiAV0C1DAV', 'snippet': {'title': 'Nature'}, 'contentDetails': {'itemCount': 17}}
+{'id': 'PLVWkvsDBrJmbtrQub-61rbo0wpL1ANMF9', 'snippet': {'title': 'Vaporwave'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmbXLrzN-vqjG-EBxYFGzlhn', 'snippet': {'title': 'Idm'}, 'contentDetails': {'itemCount': 6}}
+{'id': 'PLVWkvsDBrJmb_XS76-hUmU0z9MQ7M2fGA', 'snippet': {'title': 'classic'}, 'contentDetails': {'itemCount': 2}}
+{'id': 'PLVWkvsDBrJmaTMTg3a6729FkwGcbeLqKs', 'snippet': {'title': 'ретро'}, 'contentDetails': {'itemCount': 7}}
+{'id': 'PLVWkvsDBrJmYx7nHNLekgcBN82IWvUCi3', 'snippet': {'title': 'jazz'}, 'contentDetails': {'itemCount': 0}}
+{'id': 'PLVWkvsDBrJmZUw-pS4Qzs_Ac04SeqrViV', 'snippet': {'title': 'chill'}, 'contentDetails': {'itemCount': 18}}
+{'id': 'PLVWkvsDBrJmbHgY1IwlFxzo-HDZw-zCX9', 'snippet': {'title': 'Рецепты'}, 'contentDetails': {'itemCount': 21}}
+{'id': 'PLVWkvsDBrJmYJkrDOkWzSM26MdkgW0B7x', 'snippet': {'title': 'IT'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmYzemPpwvLkn0AfMXPWfm4s', 'snippet': {'title': 'Deep & dub'}, 'contentDetails': {'itemCount': 45}}
+{'id': 'PLVWkvsDBrJmbhsW2WwtsoXOFr4eTSzwEr', 'snippet': {'title': 'Ambient'}, 'contentDetails': {'itemCount': 35}}
+{'id': 'PLVWkvsDBrJmbJXAHCerPNljEhKubX3RU5', 'snippet': {'title': 'UK house'}, 'contentDetails': {'itemCount': 5}}
+{'id': 'PLVWkvsDBrJmaFGx-aHNrzWJrGLMluIV8e', 'snippet': {'title': 'Old Days House'}, 'contentDetails': {'itemCount': 4}}
+{'id': 'PLVWkvsDBrJmYCEt1d_U0IrRIlZJ520jNg', 'snippet': {'title': 'Progressive House'}, 'contentDetails': {'itemCount': 10}}
+{'id': 'PLVWkvsDBrJmb6oaaQBJADuydGmj2YKur6', 'snippet': {'title': 'Chillhop'}, 'contentDetails': {'itemCount': 91}}

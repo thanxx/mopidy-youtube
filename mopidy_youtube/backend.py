@@ -5,7 +5,7 @@ from urllib.parse import parse_qs, urlparse
 
 import pykka
 from mopidy import backend, httpclient
-from mopidy.models import Album, Artist, SearchResult, Track
+from mopidy.models import Album, Artist, SearchResult, Track, Ref, Playlist
 from mopidy_youtube import Extension, logger, youtube
 from mopidy_youtube.apis import youtube_api, youtube_bs4api
 
@@ -97,6 +97,40 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     YouTubeLibraryProvider.lookup) will most likely be instantaneous, since
     all info will be ready by that time.
     """
+    ROOT_DIR = Ref.directory(uri="youtube:", name="Youtube Playlists")
+
+
+#    chillhop2020 = Ref.track(uri='youtube:https://www.youtube.com/watch?v=SINV2KJJ-MY', name='track')
+#    deep = Ref.track(uri='youtube:playlist:https://www.youtube.com/playlist?list=PLVWkvsDBrJmYzemPpwvLkn0AfMXPWfm4s', name='Deep & Dub')
+
+    
+    _ROOT_DIR_CONTENTS = [
+        Ref.directory(uri='youtube:collection/CHNL.UCKLtqNl0BkPfwM0Wzb4cSvw', name='My playlists')
+    ]
+
+    root_directory = ROOT_DIR
+
+    def browse(self, uri):
+        logger.info('__________________')
+        logger.info('browse: ' + uri)
+        if uri == self.ROOT_DIR.uri:
+            return self._ROOT_DIR_CONTENTS
+        elif uri.startswith("youtube:playlist"):
+            logger.info('entered playlist')
+            trackrefs=[]
+            tracks=self.lookup(uri)
+            for track in tracks:
+                trackrefs.append(Ref.track(uri=track.uri, name=track.name))
+            return trackrefs
+        elif uri.startswith("youtube:collection"):
+            logger.info('entered collection')
+            playlistrefs=[]
+            playlists=self.get_collection(uri)
+            for playlist in playlists:
+                playlistrefs.append(Ref.playlist(uri=playlist.uri, name=playlist.title.get()))
+            return playlistrefs
+
+
 
     def search(self, query=None, uris=None, exact=False):
         # TODO Support exact search
@@ -117,11 +151,12 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
 
         # load playlist info (to get video_count) of all playlists together
         playlists = [entry for entry in entries if not entry.is_video]
-        youtube.Playlist.load_info(playlists)
 
         albums = []
         artists = []
         tracks = []
+
+        logger.info(entries)
 
         for entry in entries:
             if entry.is_video:
@@ -131,15 +166,15 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
 
                 # # does it make sense to try to return youtube 'channels' as
                 # # mopidy 'artists'? I'm not convinced.
-                # if entry.channelId.get():
-                #     artists.append(
-                #             Artist(
-                #                 name=f"YouTube channel: {entry.channel.get()}",
-                #                 uri="yotube:channel/%s.%s" % (safe_url(entry.channel.get()), entry.channelId.get()),
-                #                 )
-                #             )
-                # else:
-                #     logger.info("no channelId")
+                #if entry.channelId.get():
+                #    artists.append(
+                #            Artist(
+                #                name=f"YouTube channel: {entry.channel.get()}",
+                #                uri="yotube:channel/%s.%s" % (safe_url(entry.channel.get()), entry.channelId.get()),
+                #                )
+                #            )
+                #else:
+                #    logger.info("no channelId")
 
             else:
                 uri_base = "youtube:playlist"
@@ -184,6 +219,24 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
             uri="youtube:search", tracks=tracks, artists=artists, albums=albums
         )
 
+    def get_collection(self, uri):
+        channel_id = extract_id(uri)
+        logger.info(channel_id)
+        collection = youtube.Entry.get_collection(channel_id)
+#        collection = youtube.Entry.search("playlist")
+#        logger.info(collection)
+#        for pl in collection:
+#            logger.info(pl.title.get())
+#       logger.info(response)
+#       uris = ['youtube:playlist/Easy listening, bossa, etc.PLVWkvsDBrJmY1_aUV_uNwxFxjaUEEKEwO', 'youtube:playlist/Mixes late 2020.PLVWkvsDBrJmZX7K7vWkpvz_cqwdxhwSOq', 'youtube:playlist/Synth.PLVWkvsDBrJmYzyUfJgvh-8h-cUn86eWGS', 'youtube:playlist/Chill 2020.PLVWkvsDBrJmaTWF4O9PgWfGz8O-qQlRXU', 'youtube:playlist/Deep \\ Tech House.PLVWkvsDBrJmYK6VROwzofHzjbRJvZFHiw', 'youtube:playlist/Nature.PLVWkvsDBrJmbtRShYZ4evireiAV0C1DAV', 'youtube:playlist/Vaporwave.PLVWkvsDBrJmbtrQub-61rbo0wpL1ANMF9', 'youtube:playlist/Idm.PLVWkvsDBrJmbXLrzN-vqjG-EBxYFGzlhn', 'youtube:playlist/classic.PLVWkvsDBrJmb_XS76-hUmU0z9MQ7M2fGA', 'youtube:playlist/ретро.PLVWkvsDBrJmaTMTg3a6729FkwGcbeLqKs', 'youtube:playlist/jazz.PLVWkvsDBrJmYx7nHNLekgcBN82IWvUCi3', 'youtube:playlist/chill.PLVWkvsDBrJmZUw-pS4Qzs_Ac04SeqrViV', 'youtube:playlist/4:20.PLVWkvsDBrJmZry3_GSwkaY3bnTI5Lzi9o', 'youtube:playlist/Рецепты.PLVWkvsDBrJmbHgY1IwlFxzo-HDZw-zCX9', 'youtube:playlist/IT.PLVWkvsDBrJmYJkrDOkWzSM26MdkgW0B7x', 'youtube:playlist/Упражнения.PLVWkvsDBrJmZERA1RKT8lt6jRUA__Inje', 'youtube:playlist/ремонт.PLVWkvsDBrJmZmA8My3xN8EGWLWp6fZ9dG', 'youtube:playlist/Deep & dub.PLVWkvsDBrJmYzemPpwvLkn0AfMXPWfm4s', 'youtube:playlist/Ambient.PLVWkvsDBrJmbhsW2WwtsoXOFr4eTSzwEr', 'youtube:playlist/Sonic.PLVWkvsDBrJmbY00lIYFWYyHz-6hyNhvga', 'youtube:playlist/UK house.PLVWkvsDBrJmbJXAHCerPNljEhKubX3RU5', 'youtube:playlist/Old Days House.PLVWkvsDBrJmaFGx-aHNrzWJrGLMluIV8e', 'youtube:playlist/Progressive House.PLVWkvsDBrJmYCEt1d_U0IrRIlZJ520jNg', 'youtube:playlist/Chillhop.PLVWkvsDBrJmb6oaaQBJADuydGmj2YKur6'] 
+#        uris = []
+#        playlists = []
+        for pl in collection:
+            pl.uri="%s/%s.%s" % ("youtube:playlist", safe_url(pl.title.get()), pl.id)
+        return collection
+
+
+
     def lookup(self, uri):
         """
         Called when the user adds a track to the playing queue, either from the
@@ -206,13 +259,16 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
         video_id = None
         playlist_id = None
 
-        # # should channels be returned?
-        # channel_id = None
+#       # # should channels be returned?
+#       channel_id = None
         if "youtube.com" in uri:
             url = urlparse(uri.replace("yt:", "").replace("youtube:", ""))
             req = parse_qs(url.query)
+            print(req)
             if "list" in req:
                 playlist_id = req.get("list")[0]
+#            elif "channel/" in uri:
+#                pass
             else:
                 video_id = req.get("v")[0]
 
@@ -226,8 +282,10 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
 
         elif "video/" in uri:
             video_id = extract_id(uri)
-        # elif "channel/" in uri:
-        #     channel_id = extract_id(uri)
+#       elif "channel/" in uri:
+#           channel_id = "UCKLtqNl0BkPfwM0Wzb4cSvw"
+#            channel_id = extract_id(uri)
+#            logger.info(channel_id)
         else:
             playlist_id = extract_id(uri)
 
@@ -249,15 +307,17 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
                 )
             ]
 
-        # elif channel_id:
-        #     logger.info(channel_id)
-        #     channel = youtube.Channel.get(channel_id)
-        #
-        #     if not channel.videos.get():
-        #         logger.info('Cannot load "%s"', uri)
-        #         return []
-        #     videos = [v for v in channel.videos.get() if v.length.get() is not None]
-        #     album_name = "YouTube Video"
+        
+#       elif channel_id:
+#           logger.info(channel_id)
+#           logger.info("EXTRACTED___________")
+#           channel = youtube.Channel.get(channel_id)
+#
+#           if not channel.videos.get():
+#               logger.info('Cannot load "%s"', uri)
+#               return []
+#           videos = [v for v in channel.videos.get() if v.length.get() is not None]
+#           album_name = "YouTube Video"
 
         else:
             playlist = youtube.Playlist.get(playlist_id)
