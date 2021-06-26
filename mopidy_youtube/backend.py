@@ -7,7 +7,6 @@ from mopidy.models import Album, Artist, SearchResult, Track, Ref
 
 from mopidy_youtube import Extension, logger, youtube
 from mopidy_youtube.apis import youtube_api, youtube_bs4api, youtube_music
-from mopidy_youtube import channel_storage
 from mopidy_youtube.data import (
     extract_channel_id,
     extract_playlist_id,
@@ -94,6 +93,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
         youtube_api.youtube_api_key = (
             config["youtube"]["youtube_api_key"] or None
         )
+        youtube.yt_channel = (config["youtube"]["yt_channel_id"] or None)
         youtube.Video.search_results = config["youtube"]["search_results"]
         youtube.Playlist.playlist_max_videos = config["youtube"][
             "playlist_max_videos"
@@ -152,9 +152,8 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
-    channel = channel_storage.my_channel
+    channel = youtube.yt_channel
     if channel:
-        print(type(channel))
         my_channel_uri = "youtube:channel:{}".format(channel)
         root_directory = Ref.directory(uri=my_channel_uri, name='My Youtube playlists')
 

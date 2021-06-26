@@ -13,7 +13,7 @@ from requests.packages.urllib3.util.timeout import Timeout
 from mopidy_youtube import logger
 
 api_enabled = False
-
+yt_channel = None
 
 def async_property(func):
     """
@@ -429,7 +429,7 @@ class Playlist(Entry):
 
 class Channel(Entry):
     @classmethod
-    def get_channel_playlists(cls, channel_id):
+    def get_channel_playlists(cls, channel_id=yt_channel):
         """
         Get all public playlists from the channel.
         """
