@@ -153,9 +153,12 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
     channel = youtube.yt_channel
-    if channel:
+    if channel is not None:
+        logger.info("youtube channel: " + channel)
         my_channel_uri = "youtube:channel:{}".format(channel)
         root_directory = Ref.directory(uri=my_channel_uri, name='My Youtube playlists')
+    else:
+        logger.info("YouTube channel is disabled")
 
     """
     Called when browsing or searching the library. To avoid horrible browsing
