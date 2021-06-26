@@ -175,10 +175,6 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     all info will be ready by that time.
     """
 
-    root_directory = Ref.directory(
-        uri="youtube:channel", name="My Youtube playlists"
-    )
-
     def browse(self, uri):
         if uri.startswith("youtube:playlist"):
             logger.info("browse playlist: " + uri)
