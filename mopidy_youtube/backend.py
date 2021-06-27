@@ -154,6 +154,8 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
     channel = youtube.yt_channel
+    print(channel)
+    print(type(channel))
     if channel is not None:
         logger.info("youtube channel: " + channel)
         my_channel_uri = "youtube:channel:{}".format(channel)
