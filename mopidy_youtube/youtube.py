@@ -13,7 +13,7 @@ from requests.packages.urllib3.util.timeout import Timeout
 from mopidy_youtube import logger
 
 api_enabled = False
-yt_channel = "UCYYHnjvZ7ihyUr-XtJlcBKA"
+yt_channel = None
 
 def async_property(func):
     """
