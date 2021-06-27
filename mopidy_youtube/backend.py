@@ -15,6 +15,7 @@ from mopidy_youtube.data import (
     format_video_uri,
 )
 
+
 """
 A typical interaction:
 1. User searches for a keyword (YouTubeLibraryProvider.search)
@@ -88,14 +89,14 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
     def __init__(self, config, audio):
         super().__init__()
         self.config = config
-        self.library = YouTubeLibraryProvider(backend=self)
         self.playback = YouTubePlaybackProvider(audio=audio, backend=self)
         youtube_api.youtube_api_key = (
             config["youtube"]["youtube_api_key"] or None
         )
         youtube.yt_channel = config["youtube"]["channel_id"]
-        if youtube.yt_channel is not None:
-            self.library.channel_enabled = True
+        print(youtube.yt_channel)
+        self.library = YouTubeLibraryProvider(backend=self)
+
         logger.info("channel id: {}".format(youtube.yt_channel))
         youtube.Video.search_results = config["youtube"]["search_results"]
         youtube.Playlist.playlist_max_videos = config["youtube"][
@@ -156,15 +157,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
 
-    channel_enabled = False
-    logger.info("Library")
-    if channel_enabled is True:
-        root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
-        logger.info("YouTube channel is enabled")
-    else:
-        logger.info("YouTube channel is disabled")
-
-    #root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
+    root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
 
     """
     Called when browsing or searching the library. To avoid horrible browsing
@@ -196,17 +189,20 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
             return trackrefs
         elif uri.startswith("youtube:channel"):
             logger.info("browse channel: " + uri)
-            playlistrefs = []
-            albums = []
-            #channel = youtube.Entry.api.browse(youtube.yt_channel)
-            #playlists = list(map(youtube.Entry.create_object, channel))
-            playlists = youtube.Channel.get_channel_playlists()
-            for pl in playlists:
-                albums.append(convert_playlist_to_album(pl))
-            for album in albums:
-                playlistrefs.append(
-                    Ref.playlist(uri=album.uri, name=album.name)
-                )
+            if youtube.yt_channel in ('', None):
+                logger.info("Browse: no channel")
+                return []
+            else:
+                logger.info(youtube.yt_channel)
+                playlistrefs = []
+                albums = []
+                #channel = youtube.Entry.api.browse(youtube.yt_channel)
+                #playlists = list(map(youtube.Entry.create_object, channel))
+                playlists = youtube.Channel.get_channel_playlists()
+                for pl in playlists:
+                    albums.append(convert_playlist_to_album(pl))
+                for album in albums:
+                    playlistrefs.append(Ref.playlist(uri=album.uri, name=album.name))
             return playlistrefs
 
     def search(self, query=None, uris=None, exact=False):
