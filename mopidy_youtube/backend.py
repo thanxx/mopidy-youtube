@@ -195,7 +195,7 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
             logger.info("browse channel: " + uri)
             playlistrefs = []
             albums = []
-            channel = youtube.Entry.api.browse()
+            channel = youtube.Entry.api.browse(youtube.yt_channel)
             playlists = list(map(youtube.Entry.create_object, channel))
             for pl in playlists:
                 albums.append(convert_playlist_to_album(pl))
