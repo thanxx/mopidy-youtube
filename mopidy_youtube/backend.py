@@ -179,6 +179,7 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     def browse(self, uri):
         if youtube.yt_channel is not None:
             self.root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
+            logger.info("YouTube channel is enabled")
         else:
             logger.info("YouTube channel is disabled")
 
