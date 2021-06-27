@@ -155,10 +155,10 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
 
-    def __init__(self):
         channel_enabled = False
+        logger.info("Library")
         if channel_enabled is True:
-            self.root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
+            root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
             logger.info("YouTube channel is enabled")
         else:
             logger.info("YouTube channel is disabled")
