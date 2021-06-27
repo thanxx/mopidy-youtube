@@ -127,6 +127,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
                     youtube.api_enabled = False
                 else:
                     logger.info("YouTube API key verified")
+                    self.library.channel_enabled = True
 
         if youtube.api_enabled is False:
             logger.info("using bs4API")
@@ -153,8 +154,12 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
-
-
+    channel_enabled = False
+    if channel_enabled is True:
+        root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
+        logger.info("YouTube channel is enabled")
+    else:
+        logger.info("YouTube channel is disabled")
 
     #root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
 
@@ -177,11 +182,7 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     """
 
     def browse(self, uri):
-        if youtube.yt_channel is not None:
-            self.root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
-            logger.info("YouTube channel is enabled")
-        else:
-            logger.info("YouTube channel is disabled")
+
 
         if uri.startswith("youtube:playlist"):
             logger.info("browse playlist: " + uri)
