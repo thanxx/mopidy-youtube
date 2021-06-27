@@ -435,7 +435,7 @@ class Channel(Entry):
         """
         set_api_data = ["title", "video_count"]
         try:
-            data = cls.api.list_channel_playlists(channel_id)
+            data = cls.api.browse(channel_id)
             if "error" in data:
                 raise Exception(data["error"])
         except Exception as e:

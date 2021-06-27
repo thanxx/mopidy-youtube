@@ -106,7 +106,8 @@ class API(Client):
         return result.json()
 
     @classmethod
-    def list_channel_playlists(cls, channel_id):
+    #def list_channel_playlists(cls, channel_id):
+    def browse(cls, channel_id):
         """
         get channel playlists
         see https://developers.google.com/youtube/v3/docs/playlists/list
