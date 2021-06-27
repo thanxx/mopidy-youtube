@@ -94,7 +94,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
         youtube_api.youtube_api_key = (
             config["youtube"]["youtube_api_key"] or None
         )
-        youtube.yt_channel = config["youtube"]["channel_id"]
+        youtube.channel = config["youtube"]["channel_id"]
         youtube.Video.search_results = config["youtube"]["search_results"]
         youtube.Playlist.playlist_max_videos = config["youtube"][
             "playlist_max_videos"
@@ -157,7 +157,7 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
 
     """
-    Called when root_directory is set to the URI of "My Youtube Channel" in channel_storage.py.
+    Called when root_directory is set to the URI of the youtube channel ID in the mopidy.conf
     When enabled makes possible to browse public playlists of the channel as well as browse separate tracks in playlists
     Requires enabled API at the moment
     """
@@ -171,12 +171,11 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
                 trackrefs.append(Ref.track(uri=track.uri, name=track.name))
             return trackrefs
         elif uri.startswith("youtube:channel"):
-            logger.info("Browse channel")
-            if youtube.yt_channel in ('', None):
-                logger.info("Browse: no channel, please set up one in the config")
+            logger.info("browse channel / library")
+            if youtube.channel in ('', None):
+                logger.info("no channel / library to browse, please set up one in the config")
                 return []
             else:
-                logger.info(youtube.yt_channel)
                 playlistrefs = []
                 albums = []
                 # playlists = youtube.Entry.api.browse()

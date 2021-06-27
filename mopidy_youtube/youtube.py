@@ -13,7 +13,7 @@ from requests.packages.urllib3.util.timeout import Timeout
 from mopidy_youtube import logger
 
 api_enabled = False
-yt_channel = None
+channel = None
 
 def async_property(func):
     """
@@ -436,7 +436,7 @@ class Channel(Entry):
         set_api_data = ["title", "video_count"]
         try:
             if channel_id is None:
-                channel_id = yt_channel
+                channel_id = channel
             data = cls.api.browse(channel_id)
             if "error" in data:
                 raise Exception(data["error"])
