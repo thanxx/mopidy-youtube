@@ -94,6 +94,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
             config["youtube"]["youtube_api_key"] or None
         )
         youtube.yt_channel = (config["youtube"]["yt_channel_id"] or None)
+        logger.info("channel id: {}".format(youtube.yt_channel))
         youtube.Video.search_results = config["youtube"]["search_results"]
         youtube.Playlist.playlist_max_videos = config["youtube"][
             "playlist_max_videos"
