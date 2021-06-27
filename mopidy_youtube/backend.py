@@ -154,10 +154,7 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
 
 class YouTubeLibraryProvider(backend.LibraryProvider):
 
-    if youtube.yt_channel is not None:
-        root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
-    else:
-        logger.info("YouTube channel is disabled")
+
 
     #root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
 
@@ -180,6 +177,11 @@ class YouTubeLibraryProvider(backend.LibraryProvider):
     """
 
     def browse(self, uri):
+        if youtube.yt_channel is not None:
+            self.root_directory = Ref.directory(uri="youtube:channel", name='My Youtube playlists')
+        else:
+            logger.info("YouTube channel is disabled")
+
         if uri.startswith("youtube:playlist"):
             logger.info("browse playlist: " + uri)
             trackrefs = []
