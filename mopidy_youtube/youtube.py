@@ -429,12 +429,14 @@ class Playlist(Entry):
 
 class Channel(Entry):
     @classmethod
-    def get_channel_playlists(cls, channel_id=yt_channel):
+    def get_channel_playlists(cls, channel_id=None):
         """
         Get all public playlists from the channel.
         """
         set_api_data = ["title", "video_count"]
         try:
+            if channel_id is None:
+                channel_id = yt_channel
             data = cls.api.browse(channel_id)
             if "error" in data:
                 raise Exception(data["error"])
