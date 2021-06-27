@@ -94,6 +94,8 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
             config["youtube"]["youtube_api_key"] or None
         )
         youtube.yt_channel = config["youtube"]["channel_id"]
+        if youtube.yt_channel is not None:
+            self.library.channel_enabled = True
         logger.info("channel id: {}".format(youtube.yt_channel))
         youtube.Video.search_results = config["youtube"]["search_results"]
         youtube.Playlist.playlist_max_videos = config["youtube"][
@@ -127,7 +129,6 @@ class YouTubeBackend(pykka.ThreadingActor, backend.Backend):
                     youtube.api_enabled = False
                 else:
                     logger.info("YouTube API key verified")
-                    self.library.channel_enabled = True
 
         if youtube.api_enabled is False:
             logger.info("using bs4API")
